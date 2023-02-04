@@ -5,10 +5,9 @@ import ScanIcon from "../assets/scan.svg";
 import NavbarIcon from "./ui/NavbarIcon";
 
 function Navbar() {
-
   return (
     <nav className="flex h-24 w-full items-center justify-center bg-gray-100">
-      <div className="flex w-full max-w-4xl justify-between">
+      <div className="flex w-full max-w-4xl px-4 justify-between">
         {/* Search */}
         <form
           className="flex max-h-14 flex-grow justify-start rounded-lg bg-white px-7 py-4"
