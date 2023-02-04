@@ -7,7 +7,7 @@ import NavbarIcon from "./ui/NavbarIcon";
 function Navbar() {
   return (
     <nav className="flex h-24 w-full items-center justify-center bg-gray-100">
-      <div className="flex w-full max-w-4xl px-4 justify-between">
+      <div className="flex w-full max-w-4xl justify-between px-4">
         {/* Search */}
         <form
           className="flex max-h-14 flex-grow justify-start rounded-lg bg-white px-7 py-4"
@@ -26,8 +26,13 @@ function Navbar() {
         </form>
 
         {/* Nav Icons */}
-        <NavbarIcon icon={CameraIcon} title="Photos" selected />
-        <NavbarIcon icon={HeartIcon} title="Saved" />
+        <NavbarIcon
+          icon={CameraIcon}
+          title="Photos"
+          bg={"bg-[#a2c8fa]"}
+          selected
+        />
+        <NavbarIcon icon={HeartIcon} title="Saved" bg={"bg-[#ffb4bc]"} />
         <NavbarIcon icon={ScanIcon} title="Theme" />
       </div>
     </nav>

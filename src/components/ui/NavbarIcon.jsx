@@ -1,7 +1,10 @@
-function NavbarIcon({icon, title}) {
+function NavbarIcon({ icon, title, bg, selected }) {
   return (
-    <div className="ml-3">
-      <div className="flex h-14 w-14 items-center justify-center rounded-lg bg-white">
+    <div className="ml-3 cursor-pointer">
+      <div
+        className={`flex h-14 w-14 items-center justify-center rounded-lg ${
+          selected && bg
+        }`}>
         <img className="h-6" src={icon} alt="" />
       </div>
       <div className="mt-1 text-center text-xs font-medium text-gray-400">
