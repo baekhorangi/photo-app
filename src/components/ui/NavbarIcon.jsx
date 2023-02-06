@@ -1,6 +1,6 @@
-function NavbarIcon({ icon, title, bg, selected }) {
+function NavbarIcon({ icon, title, bg, selected, onclick }) {
   return (
-    <div className="ml-3 cursor-pointer">
+    <div className="ml-3 cursor-pointer" onClick={onclick}>
       <div
         className={`flex h-14 w-14 items-center justify-center rounded-lg ${
           selected && bg

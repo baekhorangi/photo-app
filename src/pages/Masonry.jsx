@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import ACCESS_KEY from "../../keys";
 import dummyData from "../../reponse";
-import { render } from "react-dom";
 
 function Masonry() {
   const useDummyData = false;
