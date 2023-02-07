@@ -3,9 +3,11 @@ import CameraIcon from "../assets/camera.svg";
 import HeartIcon from "../assets/heart.svg";
 import ScanIcon from "../assets/scan.svg";
 import NavbarIcon from "./ui/NavbarIcon";
-import { Link, useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 function Navbar() {
+  const navigate = useNavigate();
+
   return (
     <nav className="flex h-24 w-full items-center justify-center bg-gray-100 dark:bg-gray-800">
       <div className="flex w-full max-w-4xl justify-between px-4">
@@ -27,22 +29,21 @@ function Navbar() {
         </form>
 
         {/* Nav Icons */}
-        <Link to="/">
-          <NavbarIcon
-            icon={CameraIcon}
-            title="Photos"
-            bg={"bg-[#a2c8fa]"}
-            selected={useLocation().pathname === "/"}
-          />
-        </Link>
-        <Link to="/favorites">
-          <NavbarIcon
-            icon={HeartIcon}
-            title="Saved"
-            bg={"bg-[#ffb4bc]"}
-            selected={useLocation().pathname === "/favorites"}
-          />
-        </Link>
+        <NavbarIcon
+          icon={CameraIcon}
+          title="Photos"
+          bg={"bg-[#a2c8fa]"}
+          selected={useLocation().pathname === "/"}
+          onclick={() => navigate("/")}
+        />
+
+        <NavbarIcon
+          icon={HeartIcon}
+          title="Saved"
+          bg={"bg-[#ffb4bc]"}
+          selected={useLocation().pathname === "/favorites"}
+          onclick={() => navigate("/favorites")}
+        />
         <NavbarIcon
           icon={ScanIcon}
           title="Theme"

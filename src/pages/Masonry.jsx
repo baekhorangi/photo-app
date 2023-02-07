@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import ACCESS_KEY from "../../keys";
 import dummyData from "../../reponse";
+import PostModal from "../components/PostModal";
 
 function Masonry() {
   const useDummyData = false;
@@ -53,7 +54,6 @@ function Masonry() {
   }
 
   function handleScroll() {
-    const scrollHeight = document.documentElement.scrollHeight;
     const scrollTop = document.documentElement.scrollTop;
     const windowHeight = window.innerHeight;
     const smallestColumn = Array.from(masonRef.current.children).reduce(
@@ -87,11 +87,14 @@ function Masonry() {
         <div key={index} className="flex w-1/2 flex-col p-2 lg:w-1/3">
           {photos
             ?.filter((_, photoIndex) => photoIndex % masonryCols == index)
-            .map((photo, index) => {
+            .map((photo, photoIndex) => {
               return (
-                <div key={index} className="mb-4 overflow-hidden rounded-lg">
+                <div
+                  key={photoIndex}
+                  className="mb-4 cursor-pointer overflow-hidden rounded-lg"
+                  onClick={() => console.log(photoIndex * masonryCols + index)}>
                   <img
-                    className="w-full"
+                    className="w-full transition-all duration-300 ease-linear hover:scale-110"
                     src={photo.urls.small}
                     alt=""
                     loading="lazy"
@@ -105,11 +108,14 @@ function Masonry() {
   }
 
   return (
-    <section className="mx-auto mt-4 flex max-w-4xl">
-      <div ref={masonRef} className="flex w-full justify-between px-2">
-        {renderMasonry()}
-      </div>
-    </section>
+    <>
+      <PostModal />
+      <section className="mx-auto mt-4 flex max-w-4xl">
+        <div ref={masonRef} className="flex w-full justify-between px-2">
+          {renderMasonry()}
+        </div>
+      </section>
+    </>
   );
 }
 
