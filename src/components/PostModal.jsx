@@ -4,7 +4,7 @@ import LeftChevronIcon from "../assets/left-chevron.svg";
 import RightChevronIcon from "../assets/right-chevron.svg";
 import PostModalItem from "./PostModalItem";
 
-function PostModal({ data, index, showModal }) {
+function PostModal({ data, index, showModal, favorites, setFavorites }) {
   const [currentIndex, setCurrentIndex] = useState(index);
 
   return (
@@ -13,7 +13,7 @@ function PostModal({ data, index, showModal }) {
       <div className="z-10 h-3/5 w-full max-w-4xl px-4">
         {/* Modal */}
 
-        <div className="relative h-full w-full overflow-hidden rounded-lg bg-white p-8 shadow-2xl">
+        <div className="relative h-full w-full overflow-hidden rounded-lg bg-white p-8 shadow-2xl dark:bg-gray-700">
           {/* X Button */}
           <button
             className="absolute top-8 right-8 transition hover:scale-110"
@@ -41,6 +41,8 @@ function PostModal({ data, index, showModal }) {
           <PostModalItem
             photo={data[currentIndex]}
             setIndex={setCurrentIndex}
+            favorites={favorites}
+            setFavorites={setFavorites}
           />
         </div>
       </div>

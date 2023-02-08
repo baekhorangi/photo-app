@@ -2,7 +2,7 @@ import React from "react";
 import Heart2Icon from "../assets/heart-2.svg";
 import StarIcon from "../assets/star.svg";
 
-function PostModalItem({ photo, index, setIndex }) {
+function PostModalItem({ photo, setIndex, favorites, setFavorites }) {
   return (
     <div className="flex h-full flex-col justify-between">
       {/* User info */}
@@ -13,7 +13,7 @@ function PostModalItem({ photo, index, setIndex }) {
           alt=""
         />
         <div className="ml-4 font-medium">
-          <h3 className="">{`${photo.user.name}`}</h3>
+          <h3 className="dark:text-white">{`${photo.user.name}`}</h3>
           {/* <h3>{`${data[0]?.user.}`}</h3> */}
         </div>
       </div>
@@ -44,9 +44,29 @@ function PostModalItem({ photo, index, setIndex }) {
           </button>
         </div>
         {/* Favorite */}
-        <div className="flex w-1/3 items-center justify-end">
+        <div
+          className="flex w-1/3 items-center justify-end"
+          onClick={() => {
+            setFavorites((prevFavs) => {
+              if (
+                prevFavs.filter((elem) => elem.id === photo.id).length !== 0
+              ) {
+                console.log("remove");
+                return prevFavs.filter((elem) => elem.id !== photo.id);
+              }
+              console.log("add");
+              return [...prevFavs, photo];
+            });
+          }}>
           <button>
-            <img src={StarIcon} alt="" />
+            <img
+              className={`${
+                favorites.filter((elem) => elem.id === photo.id).length === 0 &&
+                "grayscale"
+              }`}
+              src={StarIcon}
+              alt=""
+            />
           </button>
         </div>
       </div>

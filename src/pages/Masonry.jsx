@@ -6,12 +6,24 @@ import PostModal from "../components/PostModal";
 
 function Masonry() {
   const useDummyData = false;
+  const [favorites, setFavorites] = useState([]);
   const [photos, setPhotos] = useState([]);
   const [page, setPage] = useState(0);
   const [loading, setLoading] = useState(true);
   const masonRef = useRef(null);
   const [showModal, setShowModal] = useState(false);
   const [modalIndex, setModalIndex] = useState(0);
+
+  useEffect(() => {
+    const localFavorities = JSON.parse(localStorage.getItem("favorites"));
+    if (localFavorities) {
+      setFavorites(localFavorities);
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("favorites", JSON.stringify(favorites));
+  }, [favorites]);
 
   const [masonryCols, setMasonryCols] = useState(
     window.innerWidth < 1024 ? 2 : 3
@@ -115,13 +127,19 @@ function Masonry() {
 
   return (
     <>
-      <section className="mx-auto mt-4 flex max-w-4xl">
+      <section className="mx-auto mt-4 max-w-4xl">
         <div ref={masonRef} className="flex w-full justify-between px-2">
           {renderMasonry()}
         </div>
       </section>
       {showModal && (
-        <PostModal data={photos} index={modalIndex} showModal={setShowModal} />
+        <PostModal
+          data={photos}
+          index={modalIndex}
+          showModal={setShowModal}
+          favorites={favorites}
+          setFavorites={setFavorites}
+        />
       )}
     </>
   );
