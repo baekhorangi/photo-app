@@ -10,6 +10,8 @@ function Masonry() {
   const [page, setPage] = useState(0);
   const [loading, setLoading] = useState(true);
   const masonRef = useRef(null);
+  const [showModal, setShowModal] = useState(false);
+  const [modalIndex, setModalIndex] = useState(0);
 
   const [masonryCols, setMasonryCols] = useState(
     window.innerWidth < 1024 ? 2 : 3
@@ -92,7 +94,11 @@ function Masonry() {
                 <div
                   key={photoIndex}
                   className="mb-4 cursor-pointer overflow-hidden rounded-lg"
-                  onClick={() => console.log(photoIndex * masonryCols + index)}>
+                  onClick={() => {
+                    // console.log(photoIndex * masonryCols + index);
+                    setModalIndex(photoIndex * masonryCols + index);
+                    setShowModal(true);
+                  }}>
                   <img
                     className="w-full transition-all duration-300 ease-linear hover:scale-110"
                     src={photo.urls.small}
@@ -109,12 +115,14 @@ function Masonry() {
 
   return (
     <>
-      <PostModal />
       <section className="mx-auto mt-4 flex max-w-4xl">
         <div ref={masonRef} className="flex w-full justify-between px-2">
           {renderMasonry()}
         </div>
       </section>
+      {showModal && (
+        <PostModal data={photos} index={modalIndex} showModal={setShowModal} />
+      )}
     </>
   );
 }

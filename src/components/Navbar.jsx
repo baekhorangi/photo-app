@@ -19,7 +19,7 @@ function Navbar() {
             console.log("oooo");
           }}>
           <button type="submit">
-            <img className="h-6" src={SearchIcon} alt="" />
+            <img className="h-6 w-6" src={SearchIcon} alt="" />
           </button>
           <input
             className="ml-9 flex-grow text-gray-600 outline-none"
