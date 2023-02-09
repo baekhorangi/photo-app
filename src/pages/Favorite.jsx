@@ -6,12 +6,14 @@ function Favorite() {
   const [photos, setPhotos] = useState();
   const [modalIndex, setModalIndex] = useState(0);
   const [showModal, setShowModal] = useState(false);
+  const [firstLoad, setFirstLoad] = useState(true);
 
   useEffect(() => {
     const localFavorities = JSON.parse(localStorage.getItem("favorites"));
     if (localFavorities) {
       setFavorites(localFavorities);
       setPhotos(localFavorities);
+      setFirstLoad(false);
     }
   }, []);
 
@@ -20,7 +22,7 @@ function Favorite() {
   }, [favorites]);
 
   useEffect(() => {
-    if (!showModal && favorites.length !== 0) {
+    if (!showModal && firstLoad !== true) {
       setPhotos(favorites);
     }
   }, [showModal]);
