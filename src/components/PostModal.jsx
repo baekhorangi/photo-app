@@ -40,7 +40,6 @@ function PostModal({ data, index, showModal, favorites, setFavorites }) {
           {/* Post */}
           <PostModalItem
             photo={data[currentIndex]}
-            setIndex={setCurrentIndex}
             favorites={favorites}
             setFavorites={setFavorites}
           />

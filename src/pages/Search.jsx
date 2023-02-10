@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import ACCESS_KEY from "../../keys";
 import PostModal from "../components/PostModal";
 
@@ -15,6 +15,7 @@ function Search() {
   const [showModal, setShowModal] = useState(false);
   const [modalIndex, setModalIndex] = useState(0);
   const [favorites, setFavorites] = useState([]);
+  const navigate = useNavigate();
 
   const fetchSearch = async () => {
     console.log("loading");
@@ -97,7 +98,7 @@ function Search() {
     return (
       <>
         <img
-          className={`h-full w-full object-cover transition-all duration-300 ease-linear group-hover:scale-110 ${
+          className={`h-full w-full cursor-pointer object-cover transition-all duration-300 ease-linear group-hover:scale-110 ${
             searchType === "collections" && "brightness-50"
           }`}
           src={src}
@@ -174,6 +175,8 @@ function Search() {
                     if (searchType === "photos") {
                       setModalIndex(index);
                       setShowModal(true);
+                    } else {
+                      navigate(`/${searchType.slice(0, -1)}/${result.id}`);
                     }
                   }}>
                   {renderImg(result)}
