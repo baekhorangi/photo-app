@@ -41,7 +41,7 @@ function Search() {
       setSearchResults([]);
       setPage(1);
       setSearchQuery(query);
-      setSearchType("photos");
+      setLastPage(false);
     }
   }, [query]);
 
@@ -63,7 +63,27 @@ function Search() {
     setSearchResults([]);
     setPage(1);
     setSearchType(type);
+    setLastPage(false);
   };
+
+  const handleScroll = () => {
+    const scrollHeight = document.documentElement.scrollHeight;
+    const scrollTop = document.documentElement.scrollTop;
+    const windowHeight = window.innerHeight;
+
+    if (windowHeight + scrollTop + 1 >= scrollHeight && !loading && !lastPage) {
+      setLoading(true);
+      fetchSearch();
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+
+    return (_) => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  });
 
   const renderImg = (result) => {
     let src = "";
@@ -144,7 +164,7 @@ function Search() {
           {searchResults?.map((result, index) => {
             return (
               <div
-                key={result.id}
+                key={index}
                 className={`aspect-square p-2 ${
                   searchType === "users" ? "w-1/3 lg:w-1/4" : "w-1/2  lg:w-1/3"
                 }`}>

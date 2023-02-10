@@ -8,7 +8,7 @@ function Masonry() {
   const useDummyData = false;
   const [favorites, setFavorites] = useState([]);
   const [photos, setPhotos] = useState([]);
-  const [page, setPage] = useState(0);
+  const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(true);
   const masonRef = useRef(null);
   const [showModal, setShowModal] = useState(false);
@@ -37,9 +37,7 @@ function Masonry() {
       });
     } else {
       const response = await axios.get(
-        `https://api.unsplash.com/photos?client_id=${ACCESS_KEY}&page=${
-          page + 1
-        }&per_page=30`
+        `https://api.unsplash.com/photos?client_id=${ACCESS_KEY}&page=${page}&per_page=30`
       );
       setPhotos((prevPhotos) => {
         return [...prevPhotos, ...response.data];
@@ -53,15 +51,15 @@ function Masonry() {
     fetchPhotos();
   }, []);
 
-  function handleResize() {
+  const handleResize = () => {
     if (window.innerWidth >= 1024) {
       setMasonryCols(3);
     } else {
       setMasonryCols(2);
     }
-  }
+  };
 
-  function handleScroll() {
+  const handleScroll = () => {
     const scrollTop = document.documentElement.scrollTop;
     const windowHeight = window.innerHeight;
     const smallestColumn = Array.from(masonRef.current.children).reduce(
@@ -77,7 +75,7 @@ function Masonry() {
       setLoading(true);
       fetchPhotos();
     }
-  }
+  };
 
   useEffect(() => {
     window.addEventListener("resize", handleResize);
@@ -89,7 +87,7 @@ function Masonry() {
     };
   });
 
-  function renderMasonry() {
+  const renderMasonry = () => {
     return new Array(masonryCols).fill(0).map((_, index) => {
       return (
         <div key={index} className="flex w-1/2 flex-col p-2 lg:w-1/3">
@@ -117,7 +115,7 @@ function Masonry() {
         </div>
       );
     });
-  }
+  };
 
   return (
     <>
