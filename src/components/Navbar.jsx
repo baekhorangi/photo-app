@@ -27,6 +27,8 @@ function Navbar() {
     }
   }, [darkMode]);
 
+  
+
   return (
     <nav className="flex h-24 w-full items-center justify-center bg-gray-100 dark:bg-gray-800">
       <div className="flex w-full max-w-4xl justify-between px-4">
@@ -36,6 +38,7 @@ function Navbar() {
           onSubmit={(e) => {
             e.preventDefault();
             navigate(`/search/${inputRef.current.value}`);
+            inputRef.current.value = "";
           }}>
           <button type="submit">
             <img className="h-6 w-6" src={SearchIcon} alt="" />

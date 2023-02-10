@@ -21,10 +21,10 @@ function PostModalItem({ photo, setIndex, favorites, setFavorites }) {
       {/* Image */}
       <div className="flex h-3/4 items-center justify-center">
         <img
-          className=" max-h-full max-w-full rounded-lg object-contain"
+          className=" max-h-full max-w-full rounded-lg object-contain cursor-pointer"
           src={photo.urls.regular}
           alt=""
-          onClick={() => setIndex((index) => index + 1)}
+          onClick={() => console.log("not implemented yet")}
         />
       </div>
 

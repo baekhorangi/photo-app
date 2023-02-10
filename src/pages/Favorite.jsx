@@ -33,9 +33,9 @@ function Favorite() {
         <div className="flex w-full flex-wrap px-2">
           {photos?.map((photo, index) => {
             return (
-              <div key={photo.id} className="aspect-square w-1/3 p-2">
+              <div key={photo.id} className="aspect-square w-1/2 p-2 lg:w-1/3">
                 <div
-                  className="h-full w-full overflow-hidden rounded-lg"
+                  className="h-full w-full cursor-pointer overflow-hidden rounded-lg"
                   onClick={() => {
                     setModalIndex(index);
                     setShowModal(true);
