@@ -10,16 +10,15 @@ function PostModalItem({ photo, favorites, setFavorites }) {
       {/* User info */}
       <div className="flex items-center">
         <img
-          className="h-14 w-14 cursor-pointer rounded-lg"
+          className="h-14 w-14 cursor-pointer rounded-lg hover:brightness-90"
           src={photo.user.profile_image.medium}
           alt=""
           onClick={() => navigate(`/user/${photo.user.id}`)}
         />
         <div
-          className="ml-4 cursor-pointer font-medium"
+          className="ml-4 cursor-pointer font-medium hover:underline"
           onClick={() => navigate(`/user/${photo.user.id}`)}>
           <h3 className="dark:text-white">{`${photo.user.name}`}</h3>
-          {/* <h3>{`${data[0]?.user.}`}</h3> */}
         </div>
       </div>
 

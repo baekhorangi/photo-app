@@ -43,13 +43,12 @@ function Masonry() {
         return [...prevPhotos, ...response.data];
       });
     }
-    setPage(page + 1);
     setLoading(false);
   };
 
   useEffect(() => {
     fetchPhotos();
-  }, []);
+  }, [page]);
 
   const handleResize = () => {
     if (window.innerWidth >= 1024) {
@@ -73,7 +72,7 @@ function Masonry() {
       !loading
     ) {
       setLoading(true);
-      fetchPhotos();
+      setPage(page + 1);
     }
   };
 
