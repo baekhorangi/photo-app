@@ -22,28 +22,26 @@ function Search() {
     const response = await axios.get(
       `https://api.unsplash.com/search/${searchType}?client_id=${ACCESS_KEY}&page=${page}&per_page=30&query=${searchQuery}`
     );
+    console.log(response.headers["x-ratelimit-remaining"])
     setSearchResults((prevResults) => {
       return [...prevResults, ...response.data.results];
     });
     if (response.data.total_pages === page) {
       setLastPage(true);
     }
-    setPage(page + 1);
     setLoading(false);
   };
 
   useEffect(() => {
-    console.log("run");
+    // console.log("run");
     fetchSearch();
-  }, [searchType, searchQuery]);
+  }, [searchType, searchQuery, page]);
 
   useEffect(() => {
-    if (page !== 1) {
-      setSearchResults([]);
-      setPage(1);
-      setSearchQuery(query);
-      setLastPage(false);
-    }
+    setSearchResults([]);
+    setPage(1);
+    setSearchQuery(query);
+    setLastPage(false);
   }, [query]);
 
   useEffect(() => {
@@ -74,7 +72,7 @@ function Search() {
 
     if (windowHeight + scrollTop + 1 >= scrollHeight && !loading && !lastPage) {
       setLoading(true);
-      fetchSearch();
+      setPage(page + 1);
     }
   };
 

@@ -41,11 +41,11 @@ function PostModalItem({ photo, favorites, setFavorites }) {
         </div>
         {/* Download */}
         <div className="flex w-1/3 justify-center">
-          <button className="rounded-lg bg-blue-500 py-2 px-20 text-center font-medium text-white transition hover:bg-blue-600">
-            <a href={photo.links.download} target="_blank">
+          <a href={photo.links.download} target="_blank">
+            <button className="rounded-lg bg-blue-500 py-2 px-20 text-center font-medium text-white transition hover:bg-blue-600">
               Download
-            </a>
-          </button>
+            </button>
+          </a>
         </div>
         {/* Favorite */}
         <div
