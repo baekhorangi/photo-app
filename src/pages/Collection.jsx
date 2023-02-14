@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import PostModal from "../components/PostModal";
+import Tags from "../components/ui/Tags";
 
 function Collection() {
   const { collectionID } = useParams();
@@ -88,9 +89,8 @@ function Collection() {
   return (
     <>
       <section className="mx-auto mt-4 flex min-h-full max-w-4xl flex-col">
+        {/* Info */}
         <div className="flex w-full flex-col items-center justify-center px-4 dark:text-white">
-          {/* Info */}
-
           {/* Info - Title */}
           <h2 className="text-4xl font-bold">{collectionInfo?.title}</h2>
 
@@ -113,18 +113,7 @@ function Collection() {
           </div>
 
           {/* Tags */}
-          <div className="mt-2 flex flex-wrap items-center justify-center">
-            {collectionInfo?.tags.map((tag) => {
-              return (
-                <button
-                  onClick={() => navigate(`/search/${tag.title}`)}
-                  className="mx-1 rounded-lg border border-black px-3 hover:bg-gray-300 dark:border-white dark:hover:bg-gray-900"
-                  key={tag.title}>
-                  {tag.title}
-                </button>
-              );
-            })}
-          </div>
+          <Tags tags={collectionInfo?.tags} />
         </div>
 
         {/* Photo Display */}
