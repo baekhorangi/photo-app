@@ -27,8 +27,6 @@ function Navbar() {
     }
   }, [darkMode]);
 
-  
-
   return (
     <nav className="flex h-24 w-full items-center justify-center bg-gray-100 dark:bg-gray-800">
       <div className="flex w-full max-w-4xl justify-between px-4">
@@ -70,7 +68,10 @@ function Navbar() {
         <NavbarIcon
           icon={ScanIcon}
           title="Theme"
-          onclick={() => setDarkMode(!darkMode)}
+          onclick={() => {
+            console.log(import.meta.env.VITE_ACCESS_KEY);
+            setDarkMode(!darkMode);
+          }}
         />
       </div>
     </nav>
