@@ -68,10 +68,7 @@ function Navbar() {
         <NavbarIcon
           icon={ScanIcon}
           title="Theme"
-          onclick={() => {
-            console.log(import.meta.env.VITE_ACCESS_KEY);
-            setDarkMode(!darkMode);
-          }}
+          onclick={() => setDarkMode(!darkMode)}
         />
       </div>
     </nav>
