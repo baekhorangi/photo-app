@@ -31,19 +31,23 @@ function Masonry() {
 
   const fetchPhotos = async () => {
     console.log("loading");
-    if (useDummyData) {
-      setPhotos((prevPhotos) => {
-        return [...prevPhotos, ...dummyData];
-      });
-    } else {
-      const response = await axios.get(
-        `https://api.unsplash.com/photos?client_id=${ACCESS_KEY}&page=${page}&per_page=30`
-      );
-      setPhotos((prevPhotos) => {
-        return [...prevPhotos, ...response.data];
-      });
+    try {
+      if (useDummyData) {
+        setPhotos((prevPhotos) => {
+          return [...prevPhotos, ...dummyData];
+        });
+      } else {
+        const response = await axios.get(
+          `https://api.unsplash.com/photos?client_id=${ACCESS_KEY}&page=${page}&per_page=30`
+        );
+        setPhotos((prevPhotos) => {
+          return [...prevPhotos, ...response.data];
+        });
+      }
+      setLoading(false);
+    } catch {
+      alert("Something went wrong with the API, please try again later");
     }
-    setLoading(false);
   };
 
   useEffect(() => {

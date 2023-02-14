@@ -19,17 +19,21 @@ function Search() {
 
   const fetchSearch = async () => {
     console.log("loading");
-    const response = await axios.get(
-      `https://api.unsplash.com/search/${searchType}?client_id=${ACCESS_KEY}&page=${page}&per_page=30&query=${searchQuery}`
-    );
-    console.log(response.headers["x-ratelimit-remaining"])
-    setSearchResults((prevResults) => {
-      return [...prevResults, ...response.data.results];
-    });
-    if (response.data.total_pages === page) {
-      setLastPage(true);
+    try {
+      const response = await axios.get(
+        `https://api.unsplash.com/search/${searchType}?client_id=${ACCESS_KEY}&page=${page}&per_page=30&query=${searchQuery}`
+      );
+      console.log(response.headers["x-ratelimit-remaining"]);
+      setSearchResults((prevResults) => {
+        return [...prevResults, ...response.data.results];
+      });
+      if (response.data.total_pages === page) {
+        setLastPage(true);
+      }
+      setLoading(false);
+    } catch {
+      alert("Something went wrong with the API, please try again later");
     }
-    setLoading(false);
   };
 
   useEffect(() => {
@@ -101,6 +105,7 @@ function Search() {
           }`}
           src={src}
           alt=""
+          loading="lazy"
         />
         {searchType !== "photos" &&
           (searchType === "users" ? (
@@ -118,7 +123,7 @@ function Search() {
                   {result.name}
                 </span>
               ) : (
-                `${result.total_photos} photos`
+                `${result.total_photos.toLocaleString()} photos`
               )}
             </div>
           ))}
@@ -173,6 +178,10 @@ function Search() {
                     if (searchType === "photos") {
                       setModalIndex(index);
                       setShowModal(true);
+                    } else if (searchType === "users") {
+                      navigate(
+                        `/${searchType.slice(0, -1)}/${result.username}`
+                      );
                     } else {
                       navigate(`/${searchType.slice(0, -1)}/${result.id}`);
                     }
@@ -191,6 +200,8 @@ function Search() {
           {!searchResults.length && "There are no results for " + searchQuery}
         </div>
       </section>
+
+      {/* Modal */}
       {searchType === "photos" && showModal && (
         <PostModal
           data={searchResults}

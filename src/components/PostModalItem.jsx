@@ -13,11 +13,12 @@ function PostModalItem({ photo, favorites, setFavorites }) {
           className="h-14 w-14 cursor-pointer rounded-lg hover:brightness-90"
           src={photo.user.profile_image.medium}
           alt=""
-          onClick={() => navigate(`/user/${photo.user.id}`)}
+          loading="lazy"
+          onClick={() => navigate(`/user/${photo.user.username}`)}
         />
         <div
-          className="ml-4 cursor-pointer font-medium hover:underline"
-          onClick={() => navigate(`/user/${photo.user.id}`)}>
+          className="ml-4 cursor-pointer font-medium"
+          onClick={() => navigate(`/user/${photo.user.username}`)}>
           <h3 className="dark:text-white">{`${photo.user.name}`}</h3>
         </div>
       </div>
@@ -28,6 +29,7 @@ function PostModalItem({ photo, favorites, setFavorites }) {
           className="max-h-full max-w-full cursor-pointer rounded-lg object-contain"
           src={photo.urls.regular}
           alt=""
+          loading="lazy"
           onClick={() => navigate(`/photo/${photo.id}`)}
         />
       </div>
@@ -37,7 +39,7 @@ function PostModalItem({ photo, favorites, setFavorites }) {
         {/* Likes */}
         <div className="flex w-1/3 items-center">
           <img className="max-h-8 cursor-not-allowed" src={Heart2Icon} alt="" />
-          <p className="ml-3 text-lg font-medium text-[#FF4557]">{`${photo.likes}`}</p>
+          <p className="ml-3 text-lg font-medium text-[#FF4557]">{`${photo.likes.toLocaleString()}`}</p>
         </div>
         {/* Download */}
         <div className="flex w-1/3 justify-center">

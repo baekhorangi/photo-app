@@ -13,7 +13,7 @@ function PostModal({ data, index, showModal, favorites, setFavorites }) {
       <div className="z-10 h-3/5 w-full max-w-4xl px-4">
         {/* Modal */}
 
-        <div className="relative h-full w-full overflow-hidden rounded-lg bg-white p-8 shadow-2xl dark:bg-gray-700">
+        <div className="relative h-full w-full overflow-hidden rounded-lg bg-gray-50 p-8 shadow-2xl dark:bg-gray-700">
           {/* X Button */}
           <button
             className="absolute top-8 right-8 transition hover:scale-110"

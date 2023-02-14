@@ -44,6 +44,7 @@ function Favorite() {
                     className="h-full w-full object-cover transition-all duration-300 ease-linear hover:scale-110"
                     src={photo.urls.small}
                     alt=""
+                    loading="lazy"
                   />
                 </div>
               </div>
