@@ -62,7 +62,7 @@ function Photo() {
         <a href={photo?.links.download} className="mt-4" target="_blank">
           <img
             className="rounded-lg"
-            src={photo?.urls.full}
+            src={photo?.urls.regular}
             alt=""
             loading="lazy"
           />
