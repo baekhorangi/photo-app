@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
 import axios from "axios";
-import ACCESS_KEY from "../../keys";
 import dummyData from "../../reponse";
 import PostModal from "../components/PostModal";
 
@@ -13,6 +12,7 @@ function Masonry() {
   const masonRef = useRef(null);
   const [showModal, setShowModal] = useState(false);
   const [modalIndex, setModalIndex] = useState(0);
+  const ACCESS_KEY = import.meta.env.VITE_ACCESS_KEY;
 
   useEffect(() => {
     const localFavorities = JSON.parse(localStorage.getItem("favorites"));
@@ -45,7 +45,8 @@ function Masonry() {
         });
       }
       setLoading(false);
-    } catch {
+    } catch (error) {
+      console.log(error);
       alert("Something went wrong with the API, please try again later");
     }
   };

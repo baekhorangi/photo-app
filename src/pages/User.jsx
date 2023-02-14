@@ -1,7 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import ACCESS_KEY from "../../keys";
 import PostModal from "../components/PostModal";
 
 function User() {
@@ -16,6 +15,7 @@ function User() {
   const [modalIndex, setModalIndex] = useState(0);
   const [favorites, setFavorites] = useState([]);
   const navigate = useNavigate();
+  const ACCESS_KEY = import.meta.env.VITE_ACCESS_KEY;
 
   const fetchUserInfo = async () => {
     console.log("loading info + collections");
