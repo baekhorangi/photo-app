@@ -1,13 +1,20 @@
 import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  setModalPhotoIndex,
+  setModalPhotos,
+  setShowModal,
+} from "../../redux/modalSlice";
+import { RootState } from "../../redux/store";
 import { Photo } from "../../typings";
 import PostModal from "../components/PostModal";
 
 function Favorite() {
   const [favorites, setFavorites] = useState<Photo[]>([]);
   const [photos, setPhotos] = useState<Photo[]>();
-  const [modalIndex, setModalIndex] = useState(0);
-  const [showModal, setShowModal] = useState(false);
   const [firstLoad, setFirstLoad] = useState(true);
+  const showModal = useSelector((state: RootState) => state.modal.open);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const localFavorites = localStorage.getItem("favorites");
@@ -23,7 +30,10 @@ function Favorite() {
   }, [favorites]);
 
   useEffect(() => {
+    console.log('aaaa')
+    console.log(favorites)
     if (!showModal && firstLoad !== true) {
+      console.log('a2')
       setPhotos(favorites);
     }
   }, [showModal]);
@@ -38,8 +48,9 @@ function Favorite() {
                 <div
                   className="h-full w-full cursor-pointer overflow-hidden rounded-lg"
                   onClick={() => {
-                    setModalIndex(index);
-                    setShowModal(true);
+                    dispatch(setModalPhotoIndex(index));
+                    dispatch(setModalPhotos(photos));
+                    dispatch(setShowModal(true));
                   }}>
                   <img
                     className="h-full w-full object-cover transition-all duration-300 ease-linear hover:scale-110"
@@ -53,15 +64,6 @@ function Favorite() {
           })}
         </div>
       </section>
-      {showModal && photos && (
-        <PostModal
-          data={photos}
-          index={modalIndex}
-          showModal={setShowModal}
-          favorites={favorites}
-          setFavorites={setFavorites}
-        />
-      )}
     </>
   );
 }

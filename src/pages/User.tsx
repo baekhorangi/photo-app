@@ -1,6 +1,13 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
+import {
+  setModalPhotoIndex,
+  setModalPhotos,
+  setShowModal,
+} from "../../redux/modalSlice";
+import { RootState } from "../../redux/store";
 import { CollectionInfo, Photo, User as UserType } from "../../typings";
 import PostModal from "../components/PostModal";
 
@@ -14,10 +21,10 @@ function User() {
   const [page, setPage] = useState(1);
   const [lastPage, setLastPage] = useState(false);
   const [loading, setLoading] = useState(true);
-  const [showModal, setShowModal] = useState(false);
-  const [modalIndex, setModalIndex] = useState(0);
   const [favorites, setFavorites] = useState<Photo[]>([]);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const ACCESS_KEY = import.meta.env.VITE_ACCESS_KEY;
 
   const fetchUserInfo = async () => {
@@ -117,21 +124,15 @@ function User() {
           {/* User Stats */}
           <div className="mt-4 flex w-full justify-center text-center">
             <div className="w-1/4">
-              <p className="font-bold ">
-                {userInfo?.downloads}
-              </p>
+              <p className="font-bold ">{userInfo?.downloads}</p>
               <p>Downloads</p>
             </div>
             <div className="w-1/4">
-              <p className="font-bold ">
-                {userInfo?.followers_count}
-              </p>
+              <p className="font-bold ">{userInfo?.followers_count}</p>
               <p>Followers</p>
             </div>
             <div className="w-1/4">
-              <p className="font-bold ">
-                {userInfo?.following_count}
-              </p>
+              <p className="font-bold ">{userInfo?.following_count}</p>
               <p>Following</p>
             </div>
           </div>
@@ -174,8 +175,9 @@ function User() {
                 <div
                   className="h-full w-full cursor-pointer overflow-hidden rounded-lg"
                   onClick={() => {
-                    setModalIndex(index);
-                    setShowModal(true);
+                    dispatch(setModalPhotoIndex(index));
+                    dispatch(setModalPhotos(userPhotos));
+                    dispatch(setShowModal(true));
                   }}>
                   <img
                     className="h-full w-full object-cover transition-all duration-300 ease-linear hover:scale-110"
@@ -194,16 +196,6 @@ function User() {
           )}
         </div>
       </section>
-      {/* Modal */}
-      {showModal && (
-        <PostModal
-          data={userPhotos}
-          index={modalIndex}
-          showModal={setShowModal}
-          favorites={favorites}
-          setFavorites={setFavorites}
-        />
-      )}
     </>
   );
 }

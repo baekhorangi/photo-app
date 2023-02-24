@@ -1,6 +1,13 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
+import {
+  setModalPhotoIndex,
+  setModalPhotos,
+  setShowModal,
+} from "../../redux/modalSlice";
+import { RootState } from "../../redux/store";
 import { CollectionInfo, Photo } from "../../typings";
 import PostModal from "../components/PostModal";
 import Tags from "../components/ui/Tags";
@@ -14,12 +21,11 @@ function Collection() {
   const [page, setPage] = useState(1);
   const [lastPage, setLastPage] = useState(false);
   const [loading, setLoading] = useState(true);
-  const [showModal, setShowModal] = useState(false);
-  const [modalIndex, setModalIndex] = useState(0);
   const [favorites, setFavorites] = useState<Photo[]>([]);
   const ACCESS_KEY = import.meta.env.VITE_ACCESS_KEY;
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const localFavorites = localStorage.getItem("favorites");
@@ -127,8 +133,9 @@ function Collection() {
                 <div
                   className="h-full w-full cursor-pointer overflow-hidden rounded-lg"
                   onClick={() => {
-                    setModalIndex(index);
-                    setShowModal(true);
+                    dispatch(setModalPhotoIndex(index));
+                    dispatch(setModalPhotos(collectionPhotos));
+                    dispatch(setShowModal(true));
                   }}>
                   <img
                     className="h-full w-full object-cover transition-all duration-300 ease-linear hover:scale-110"
@@ -147,17 +154,6 @@ function Collection() {
           )}
         </div>
       </section>
-
-      {/* Modal */}
-      {showModal && (
-        <PostModal
-          data={collectionPhotos}
-          index={modalIndex}
-          showModal={setShowModal}
-          favorites={favorites}
-          setFavorites={setFavorites}
-        />
-      )}
     </>
   );
 }

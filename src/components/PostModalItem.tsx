@@ -1,5 +1,7 @@
 import React, { Dispatch, SetStateAction } from "react";
+import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
+import { setShowModal } from "../../redux/modalSlice";
 import { Photo } from "../../typings";
 import Heart2Icon from "../assets/heart-2.svg";
 import StarIcon from "../assets/star.svg";
@@ -12,6 +14,7 @@ interface Props {
 
 function PostModalItem({ photo, favorites, setFavorites }: Props) {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   return (
     <div className="flex h-full flex-col justify-between">
       {/* User info */}
@@ -21,11 +24,17 @@ function PostModalItem({ photo, favorites, setFavorites }: Props) {
           src={photo.user.profile_image.medium}
           alt=""
           loading="lazy"
-          onClick={() => navigate(`/user/${photo.user.username}`)}
+          onClick={() => {
+            navigate(`/user/${photo.user.username}`);
+            dispatch(setShowModal(false));
+          }}
         />
         <div
           className="ml-4 cursor-pointer font-medium"
-          onClick={() => navigate(`/user/${photo.user.username}`)}>
+          onClick={() => {
+            navigate(`/user/${photo.user.username}`);
+            dispatch(setShowModal(false));
+          }}>
           <h3 className="dark:text-white">{`${photo.user.name}`}</h3>
         </div>
       </div>
@@ -37,7 +46,10 @@ function PostModalItem({ photo, favorites, setFavorites }: Props) {
           src={photo.urls.regular}
           alt=""
           loading="lazy"
-          onClick={() => navigate(`/photo/${photo.id}`)}
+          onClick={() => {
+            navigate(`/photo/${photo.id}`);
+            dispatch(setShowModal(false));
+          }}
         />
       </div>
 

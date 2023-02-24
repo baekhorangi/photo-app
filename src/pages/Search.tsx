@@ -1,6 +1,13 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
+import {
+  setModalPhotoIndex,
+  setModalPhotos,
+  setShowModal,
+} from "../../redux/modalSlice";
+import { RootState } from "../../redux/store";
 import { CollectionInfo, Photo, User } from "../../typings";
 import PostModal from "../components/PostModal";
 
@@ -16,11 +23,11 @@ function Search() {
   const [page, setPage] = useState(1);
   const [lastPage, setLastPage] = useState(false);
   const [loading, setLoading] = useState(true);
-  const [showModal, setShowModal] = useState(false);
-  const [modalIndex, setModalIndex] = useState(0);
   const [favorites, setFavorites] = useState<Photo[]>([]);
   const navigate = useNavigate();
   const ACCESS_KEY = import.meta.env.VITE_ACCESS_KEY;
+
+  const dispatch = useDispatch();
 
   const fetchSearch = async () => {
     console.log("loading");
@@ -175,15 +182,22 @@ function Search() {
                 <div
                   className="group relative h-full w-full cursor-pointer overflow-hidden rounded-lg"
                   onClick={() => {
-                    if ("likes" in result) {
-                      setModalIndex(index);
-                      setShowModal(true);
-                    } else if ("profile_image" in result) {
+                    if (searchType === "photos") {
+                      dispatch(setModalPhotoIndex(index));
+                      dispatch(setModalPhotos(searchResults as Photo[]));
+                      dispatch(setShowModal(true));
+                    } else if (searchType === "users") {
                       navigate(
-                        `/${searchType.slice(0, -1)}/${result.username}`
+                        `/${searchType.slice(0, -1)}/${
+                          (result as User).username
+                        }`
                       );
                     } else {
-                      navigate(`/${searchType.slice(0, -1)}/${result.id}`);
+                      navigate(
+                        `/${searchType.slice(0, -1)}/${
+                          (result as CollectionInfo).id
+                        }`
+                      );
                     }
                   }}>
                   {renderImg(result)}
@@ -200,17 +214,6 @@ function Search() {
           {!searchResults.length && "There are no results for " + searchQuery}
         </div>
       </section>
-
-      {/* Modal */}
-      {searchType === "photos" && showModal && (
-        <PostModal
-          data={searchResults as Photo[]}
-          index={modalIndex}
-          showModal={setShowModal}
-          favorites={favorites}
-          setFavorites={setFavorites}
-        />
-      )}
     </>
   );
 }

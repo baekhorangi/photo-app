@@ -3,28 +3,23 @@ import axios from "axios";
 import dummyData from "../../reponse";
 import PostModal from "../components/PostModal";
 import { Photo } from "../../typings";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
+import {
+  setModalPhotoIndex,
+  setModalPhotos,
+  setShowModal,
+} from "../../redux/modalSlice";
 
 function Masonry() {
   const useDummyData = false;
-  const [favorites, setFavorites] = useState<Photo[]>([]);
   const [photos, setPhotos] = useState<Photo[]>([]);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(true);
   const masonRef = useRef<HTMLDivElement>(null);
-  const [showModal, setShowModal] = useState(false);
-  const [modalIndex, setModalIndex] = useState(0);
   const ACCESS_KEY = import.meta.env.VITE_ACCESS_KEY;
 
-  useEffect(() => {
-    const localFavorites = localStorage.getItem("favorites");
-    if (localFavorites) {
-      setFavorites(JSON.parse(localFavorites));
-    }
-  }, []);
-
-  useEffect(() => {
-    localStorage.setItem("favorites", JSON.stringify(favorites));
-  }, [favorites]);
+  const dispatch = useDispatch();
 
   const [masonryCols, setMasonryCols] = useState(
     window.innerWidth < 1024 ? 2 : 3
@@ -106,8 +101,11 @@ function Masonry() {
                   className="mb-4 cursor-pointer overflow-hidden rounded-lg"
                   onClick={() => {
                     // console.log(photoIndex * masonryCols + index);
-                    setModalIndex(photoIndex * masonryCols + index);
-                    setShowModal(true);
+                    dispatch(
+                      setModalPhotoIndex(photoIndex * masonryCols + index)
+                    );
+                    dispatch(setModalPhotos(photos));
+                    dispatch(setShowModal(true));
                   }}>
                   <img
                     className="w-full transition-all duration-300 ease-linear hover:scale-110"
@@ -130,15 +128,6 @@ function Masonry() {
           {renderMasonry()}
         </div>
       </section>
-      {showModal && (
-        <PostModal
-          data={photos}
-          index={modalIndex}
-          showModal={setShowModal}
-          favorites={favorites}
-          setFavorites={setFavorites}
-        />
-      )}
     </>
   );
 }

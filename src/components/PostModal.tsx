@@ -4,17 +4,19 @@ import LeftChevronIcon from "../assets/left-chevron.svg";
 import RightChevronIcon from "../assets/right-chevron.svg";
 import PostModalItem from "./PostModalItem";
 import { Photo } from "../../typings";
+import { useDispatch, useSelector } from "react-redux";
+import { setModalPhotoIndex, setShowModal } from "../../redux/modalSlice";
+import { RootState } from "../../redux/store";
 
 interface Props {
-  data: Photo[];
-  index: number;
-  showModal: Dispatch<SetStateAction<boolean>>;
   favorites: Photo[];
   setFavorites: Dispatch<SetStateAction<Photo[]>>;
 }
 
-function PostModal({ data, index, showModal, favorites, setFavorites }: Props) {
-  const [currentIndex, setCurrentIndex] = useState(index);
+function PostModal({ favorites, setFavorites }: Props) {
+  const photos = useSelector((state: RootState) => state.modal.photos);
+  const photoIndex = useSelector((state: RootState) => state.modal.photoIndex);
+  const dispatch = useDispatch();
 
   return (
     <div className="fixed top-1/2 left-1/2 z-10 flex h-screen w-full -translate-x-1/2 -translate-y-1/2 items-center justify-center bg-gray-800/90">
@@ -26,7 +28,7 @@ function PostModal({ data, index, showModal, favorites, setFavorites }: Props) {
           {/* X Button */}
           <button
             className="absolute top-8 right-8 transition hover:scale-110"
-            onClick={() => showModal(false)}>
+            onClick={() => dispatch(setShowModal(false))}>
             <img src={XIcon} alt="" />
           </button>
 
@@ -34,7 +36,11 @@ function PostModal({ data, index, showModal, favorites, setFavorites }: Props) {
           <button
             className="absolute top-1/2 rounded-full bg-gray-400/90 py-3 px-4 transition hover:scale-110"
             onClick={() =>
-              setCurrentIndex((currentIndex + data.length - 1) % data.length)
+              dispatch(
+                setModalPhotoIndex(
+                  (photoIndex + photos.length - 1) % photos.length
+                )
+              )
             }>
             <img src={LeftChevronIcon} alt="" />
           </button>
@@ -42,13 +48,15 @@ function PostModal({ data, index, showModal, favorites, setFavorites }: Props) {
           {/* Right Chevron */}
           <button
             className="absolute top-1/2 right-8 rounded-full bg-gray-400/90 py-3 px-4 transition hover:scale-110"
-            onClick={() => setCurrentIndex((currentIndex + 1) % data.length)}>
+            onClick={() =>
+              dispatch(setModalPhotoIndex((photoIndex + 1) % photos.length))
+            }>
             <img src={RightChevronIcon} alt="" />
           </button>
 
           {/* Post */}
           <PostModalItem
-            photo={data[currentIndex]}
+            photo={photos[photoIndex]}
             favorites={favorites}
             setFavorites={setFavorites}
           />
@@ -58,7 +66,7 @@ function PostModal({ data, index, showModal, favorites, setFavorites }: Props) {
       {/* Outside Overlay */}
       <div
         className="absolute h-full w-full"
-        onClick={() => showModal(false)}></div>
+        onClick={() => dispatch(setShowModal(false))}></div>
     </div>
   );
 }
