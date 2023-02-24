@@ -20,9 +20,7 @@ function Photo() {
         `https://api.unsplash.com/photos/${photoID}?client_id=${ACCESS_KEY}`
       );
       setPhoto(response.data);
-      console.log(response);
     } catch (e) {
-      console.log(e);
       alert("Something went wrong with the API, please try again later");
     }
   };

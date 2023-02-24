@@ -100,7 +100,6 @@ function Masonry() {
           {photos
             ?.filter((_, photoIndex) => photoIndex % masonryCols == index)
             .map((photo, photoIndex) => {
-              console.log(photo);
               return (
                 <div
                   key={photoIndex}

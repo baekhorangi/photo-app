@@ -23,7 +23,6 @@ function Search() {
       const response = await axios.get(
         `https://api.unsplash.com/search/${searchType}?client_id=${ACCESS_KEY}&page=${page}&per_page=30&query=${searchQuery}`
       );
-      console.log(response.headers["x-ratelimit-remaining"]);
       setSearchResults((prevResults) => {
         return [...prevResults, ...response.data.results];
       });
@@ -37,7 +36,6 @@ function Search() {
   };
 
   useEffect(() => {
-    // console.log("run");
     fetchSearch();
   }, [searchType, searchQuery, page]);
 

@@ -1,19 +1,22 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { CollectionInfo, Photo } from "../../typings";
 import PostModal from "../components/PostModal";
 import Tags from "../components/ui/Tags";
 
 function Collection() {
   const { collectionID } = useParams();
-  const [collectionInfo, setCollectionInfo] = useState(null);
-  const [collectionPhotos, setCollectionPhotos] = useState([]);
+  const [collectionInfo, setCollectionInfo] = useState<CollectionInfo | null>(
+    null
+  );
+  const [collectionPhotos, setCollectionPhotos] = useState<Photo[]>([]);
   const [page, setPage] = useState(1);
   const [lastPage, setLastPage] = useState(false);
   const [loading, setLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
   const [modalIndex, setModalIndex] = useState(0);
-  const [favorites, setFavorites] = useState([]);
+  const [favorites, setFavorites] = useState<Photo[]>([]);
   const ACCESS_KEY = import.meta.env.VITE_ACCESS_KEY;
 
   const navigate = useNavigate();
@@ -38,7 +41,7 @@ function Collection() {
         `https://api.unsplash.com/collections/${collectionID}/photos?client_id=${ACCESS_KEY}&page=${page}&per_page=30`
       );
       // console.log(response);
-      setCollectionPhotos((prevResults) => {
+      setCollectionPhotos((prevResults): Photo[] => {
         return [...prevResults, ...response.data];
       });
       if (response.headers["x-total"] <= page * 30) {

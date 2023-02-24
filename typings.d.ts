@@ -22,3 +22,11 @@ export interface User {
     large: string;
   };
 }
+
+export interface CollectionInfo {
+  title: string;
+  user: User;
+  tags: {
+    title: string;
+  }[];
+}

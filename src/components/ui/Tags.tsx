@@ -1,7 +1,12 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { CollectionInfo } from "../../../typings";
 
-function Tags({ tags }) {
+interface Props {
+  tags: CollectionInfo["tags"] | undefined;
+}
+
+function Tags({ tags }: Props) {
   const navigate = useNavigate();
 
   return (
