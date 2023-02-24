@@ -1,9 +1,16 @@
-import React from "react";
+import React, { Dispatch, SetStateAction } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { Photo } from "../../typings";
 import Heart2Icon from "../assets/heart-2.svg";
 import StarIcon from "../assets/star.svg";
 
-function PostModalItem({ photo, favorites, setFavorites }) {
+interface Props {
+  photo: Photo;
+  favorites: Photo[];
+  setFavorites: Dispatch<SetStateAction<Photo[]>>;
+}
+
+function PostModalItem({ photo, favorites, setFavorites }: Props) {
   const navigate = useNavigate();
   return (
     <div className="flex h-full flex-col justify-between">

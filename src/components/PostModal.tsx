@@ -1,10 +1,19 @@
-import React, { useState } from "react";
+import React, { Dispatch, SetStateAction, useState } from "react";
 import XIcon from "../assets/xmark.svg";
 import LeftChevronIcon from "../assets/left-chevron.svg";
 import RightChevronIcon from "../assets/right-chevron.svg";
 import PostModalItem from "./PostModalItem";
+import { Photo } from "../../typings";
 
-function PostModal({ data, index, showModal, favorites, setFavorites }) {
+interface Props {
+  data: Photo[];
+  index: number;
+  showModal: Dispatch<SetStateAction<boolean>>;
+  favorites: Photo[];
+  setFavorites: Dispatch<SetStateAction<Photo[]>>;
+}
+
+function PostModal({ data, index, showModal, favorites, setFavorites }: Props) {
   const [currentIndex, setCurrentIndex] = useState(index);
 
   return (

@@ -10,4 +10,15 @@ export interface Photo {
     small: string;
     full: string;
   };
+  user: User;
+}
+
+export interface User {
+  name: string;
+  username: string;
+  profile_image: {
+    small: string;
+    medium: string;
+    large: string;
+  };
 }

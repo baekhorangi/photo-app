@@ -6,7 +6,7 @@ import { Photo } from "../../typings";
 
 function Masonry() {
   const useDummyData = false;
-  const [favorites, setFavorites] = useState([]);
+  const [favorites, setFavorites] = useState<Photo[]>([]);
   const [photos, setPhotos] = useState<Photo[]>([]);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(true);
@@ -34,9 +34,9 @@ function Masonry() {
     console.log("loading");
     try {
       if (useDummyData) {
-        setPhotos((prevPhotos): Photo[] => {
-          return [...prevPhotos, ...dummyData];
-        });
+        // setPhotos((prevPhotos): Photo[] => {
+        //   return [...prevPhotos, ...dummyData];
+        // });
       } else {
         const response = await axios.get(
           `https://api.unsplash.com/photos?client_id=${ACCESS_KEY}&page=${page}&per_page=30`
