@@ -11,6 +11,8 @@ export interface Photo {
     full: string;
   };
   user: User;
+  tags: Tag[];
+  views: number;
 }
 
 export interface User {
@@ -21,12 +23,29 @@ export interface User {
     medium: string;
     large: string;
   };
+  bio: string;
+  social: {
+    instagram_username: string;
+  };
+  downloads: number;
+  followers_count: number;
+  following_count: number;
 }
 
 export interface CollectionInfo {
   title: string;
   user: User;
-  tags: {
-    title: string;
-  }[];
+  tags: Tag[];
+  id: string;
+  cover_photo: {
+    urls: {
+      regular: string;
+      small: string;
+      full: string;
+    };
+  };
+}
+
+export interface Tag {
+  title: string;
 }

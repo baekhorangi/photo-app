@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Favorite from "./pages/Favorite";
 import Search from "./pages/Search";
 import User from "./pages/User";
-import Photo from "./pages/Photo";
+import PhotoType from "./pages/Photo";
 import Collection from "./pages/Collection";
 
 function App() {
@@ -17,7 +17,7 @@ function App() {
           <Route path="/favorites" element={<Favorite />} />
           <Route path="/search/:query" element={<Search />} />
           <Route path="/user/:userID" element={<User />} />
-          <Route path="/photo/:photoID" element={<Photo />} />
+          <Route path="/photo/:photoID" element={<PhotoType />} />
           <Route path="/collection/:collectionID" element={<Collection />} />
         </Routes>
       </div>

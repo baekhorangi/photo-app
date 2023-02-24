@@ -5,13 +5,14 @@ import Heart2Icon from "../assets/heart-2.svg";
 import StarIcon from "../assets/star.svg";
 import EyeIcon from "../assets/eye.svg";
 import Tags from "../components/ui/Tags";
+import { Photo as PhotoType } from "../../typings";
 
 function Photo() {
   const { photoID } = useParams();
-  const [photo, setPhoto] = useState();
+  const [photo, setPhoto] = useState<PhotoType>();
   const ACCESS_KEY = import.meta.env.VITE_ACCESS_KEY;
   const navigate = useNavigate();
-  const [favorites, setFavorites] = useState([]);
+  const [favorites, setFavorites] = useState<PhotoType[]>([]);
 
   const fetchPhoto = async () => {
     console.log("loading info");
@@ -88,15 +89,18 @@ function Photo() {
           <div
             className="flex w-1/6 items-center justify-center"
             onClick={() => {
-              setFavorites((prevFavs) => {
+              setFavorites((prevFavs): PhotoType[] => {
                 if (
                   prevFavs.filter((elem) => elem.id === photo?.id).length !== 0
                 ) {
                   console.log("remove");
                   return prevFavs.filter((elem) => elem.id !== photo?.id);
+                } else if (prevFavs && photo) {
+                  console.log("add");
+                  return [...prevFavs, photo];
+                } else {
+                  return [];
                 }
-                console.log("add");
-                return [...prevFavs, photo];
               });
             }}>
             <button>

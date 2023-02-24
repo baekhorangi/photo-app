@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
+import { Photo } from "../../typings";
 import PostModal from "../components/PostModal";
 
 function Favorite() {
-  const [favorites, setFavorites] = useState([]);
-  const [photos, setPhotos] = useState();
+  const [favorites, setFavorites] = useState<Photo[]>([]);
+  const [photos, setPhotos] = useState<Photo[]>();
   const [modalIndex, setModalIndex] = useState(0);
   const [showModal, setShowModal] = useState(false);
   const [firstLoad, setFirstLoad] = useState(true);
@@ -52,7 +53,7 @@ function Favorite() {
           })}
         </div>
       </section>
-      {showModal && (
+      {showModal && photos && (
         <PostModal
           data={photos}
           index={modalIndex}

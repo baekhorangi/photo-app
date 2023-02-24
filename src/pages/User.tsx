@@ -1,19 +1,22 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { CollectionInfo, Photo, User as UserType } from "../../typings";
 import PostModal from "../components/PostModal";
 
 function User() {
   const { userID } = useParams();
-  const [userInfo, setUserInfo] = useState(null);
-  const [userCollections, setUserCollections] = useState(null);
-  const [userPhotos, setUserPhotos] = useState([]);
+  const [userInfo, setUserInfo] = useState<UserType | null>(null);
+  const [userCollections, setUserCollections] = useState<
+    CollectionInfo[] | null
+  >(null);
+  const [userPhotos, setUserPhotos] = useState<Photo[]>([]);
   const [page, setPage] = useState(1);
   const [lastPage, setLastPage] = useState(false);
   const [loading, setLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
   const [modalIndex, setModalIndex] = useState(0);
-  const [favorites, setFavorites] = useState([]);
+  const [favorites, setFavorites] = useState<Photo[]>([]);
   const navigate = useNavigate();
   const ACCESS_KEY = import.meta.env.VITE_ACCESS_KEY;
 
@@ -27,6 +30,7 @@ function User() {
       const response2 = await axios.get(
         `https://api.unsplash.com/users/${userID}/collections?client_id=${ACCESS_KEY}&per_page=6`
       );
+      console.log(response2.data);
       setUserCollections(response2.data);
     } catch {
       alert("Something went wrong with the API, please try again later");
