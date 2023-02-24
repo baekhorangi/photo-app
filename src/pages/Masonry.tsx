@@ -2,22 +2,23 @@ import React, { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import dummyData from "../../reponse";
 import PostModal from "../components/PostModal";
+import { Photo } from "../../typings";
 
 function Masonry() {
   const useDummyData = false;
   const [favorites, setFavorites] = useState([]);
-  const [photos, setPhotos] = useState([]);
+  const [photos, setPhotos] = useState<Photo[]>([]);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(true);
-  const masonRef = useRef(null);
+  const masonRef = useRef<HTMLDivElement>(null);
   const [showModal, setShowModal] = useState(false);
   const [modalIndex, setModalIndex] = useState(0);
   const ACCESS_KEY = import.meta.env.VITE_ACCESS_KEY;
 
   useEffect(() => {
-    const localFavorities = JSON.parse(localStorage.getItem("favorites"));
-    if (localFavorities) {
-      setFavorites(localFavorities);
+    const localFavorites = localStorage.getItem("favorites");
+    if (localFavorites) {
+      setFavorites(JSON.parse(localFavorites));
     }
   }, []);
 
@@ -33,7 +34,7 @@ function Masonry() {
     console.log("loading");
     try {
       if (useDummyData) {
-        setPhotos((prevPhotos) => {
+        setPhotos((prevPhotos): Photo[] => {
           return [...prevPhotos, ...dummyData];
         });
       } else {
@@ -66,14 +67,15 @@ function Masonry() {
   const handleScroll = () => {
     const scrollTop = document.documentElement.scrollTop;
     const windowHeight = window.innerHeight;
-    const smallestColumn = Array.from(masonRef.current.children).reduce(
-      (a, b) => (a.lastChild.offsetTop < b.lastChild.offsetTop ? a : b)
+    const smallestColumn = Array.from(masonRef.current!.children).reduce(
+      (a, b) =>
+        a.lastElementChild!.scrollTop < b.lastElementChild!.scrollTop ? a : b
     );
 
     if (
       scrollTop + windowHeight >=
         smallestColumn.children[smallestColumn.childElementCount - 1]
-          .offsetTop &&
+          .scrollTop &&
       !loading
     ) {
       setLoading(true);
@@ -85,7 +87,7 @@ function Masonry() {
     window.addEventListener("resize", handleResize);
     window.addEventListener("scroll", handleScroll);
 
-    return (_) => {
+    return () => {
       window.removeEventListener("resize", handleResize);
       window.removeEventListener("scroll", handleScroll);
     };
@@ -98,6 +100,7 @@ function Masonry() {
           {photos
             ?.filter((_, photoIndex) => photoIndex % masonryCols == index)
             .map((photo, photoIndex) => {
+              console.log(photo);
               return (
                 <div
                   key={photoIndex}

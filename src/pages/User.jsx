@@ -52,9 +52,9 @@ function User() {
   };
 
   useEffect(() => {
-    const localFavorities = JSON.parse(localStorage.getItem("favorites"));
-    if (localFavorities) {
-      setFavorites(localFavorities);
+    const localFavorites = localStorage.getItem("favorites");
+    if (localFavorites) {
+      setFavorites(JSON.parse(localFavorites));
     }
     fetchUserInfo();
   }, []);

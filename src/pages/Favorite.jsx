@@ -9,10 +9,10 @@ function Favorite() {
   const [firstLoad, setFirstLoad] = useState(true);
 
   useEffect(() => {
-    const localFavorities = JSON.parse(localStorage.getItem("favorites"));
-    if (localFavorities) {
-      setFavorites(localFavorities);
-      setPhotos(localFavorities);
+    const localFavorites = localStorage.getItem("favorites");
+    if (localFavorites) {
+      setFavorites(JSON.parse(localFavorites));
+      setPhotos(JSON.parse(localFavorites));
       setFirstLoad(false);
     }
   }, []);
