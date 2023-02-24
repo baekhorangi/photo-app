@@ -9,10 +9,10 @@ import { useEffect, useRef, useState } from "react";
 function Navbar() {
   const navigate = useNavigate();
   const [darkMode, setDarkMode] = useState(false);
-  const inputRef = useRef(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    const localTheme = JSON.parse(localStorage.getItem("darkMode"));
+    const localTheme = JSON.parse(localStorage.getItem("darkMode")!);
     if (localTheme) {
       setDarkMode(localTheme);
     }
@@ -35,8 +35,8 @@ function Navbar() {
           className="flex max-h-14 flex-grow justify-start rounded-lg bg-white px-7 py-4"
           onSubmit={(e) => {
             e.preventDefault();
-            navigate(`/search/${inputRef.current.value}`);
-            inputRef.current.value = "";
+            navigate(`/search/${inputRef.current!.value}`);
+            inputRef.current!.value = "";
           }}>
           <button type="submit">
             <img className="h-6 w-6" src={SearchIcon} alt="" />

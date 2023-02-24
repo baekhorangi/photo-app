@@ -1,4 +1,12 @@
-function NavbarIcon({ icon, title, bg, selected, onclick }) {
+interface Props {
+  icon: string;
+  title: string;
+  bg?: string;
+  selected?: boolean;
+  onclick: () => void;
+}
+
+function NavbarIcon({ icon, title, bg, selected, onclick }: Props) {
   return (
     <div className="ml-3">
       <div
