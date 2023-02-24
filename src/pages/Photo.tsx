@@ -76,13 +76,13 @@ function Photo() {
               src={Heart2Icon}
               alt=""
             />
-            <p className="ml-3 text-lg font-medium text-[#FF4557]">{`${photo?.likes.toLocaleString()}`}</p>
+            <p className="ml-3 text-lg font-medium text-[#FF4557]">{`${photo?.likes}`}</p>
           </div>
 
           {/* Views */}
           <div className="flex w-1/6 items-center justify-center">
             <img className="max-h-8 dark:invert" src={EyeIcon} alt="" />
-            <p className="ml-3 text-lg font-medium ">{`${photo?.views.toLocaleString()}`}</p>
+            <p className="ml-3 text-lg font-medium ">{`${photo?.views}`}</p>
           </div>
 
           {/* Favorite */}

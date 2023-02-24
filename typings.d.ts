@@ -44,6 +44,7 @@ export interface CollectionInfo {
       full: string;
     };
   };
+  total_photos: number;
 }
 
 export interface Tag {

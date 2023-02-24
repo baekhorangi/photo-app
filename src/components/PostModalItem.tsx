@@ -46,7 +46,7 @@ function PostModalItem({ photo, favorites, setFavorites }: Props) {
         {/* Likes */}
         <div className="flex w-1/3 items-center">
           <img className="max-h-8 cursor-not-allowed" src={Heart2Icon} alt="" />
-          <p className="ml-3 text-lg font-medium text-[#FF4557]">{`${photo.likes.toLocaleString()}`}</p>
+          <p className="ml-3 text-lg font-medium text-[#FF4557]">{`${photo.likes}`}</p>
         </div>
         {/* Download */}
         <div className="flex w-1/3 justify-center">

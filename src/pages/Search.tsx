@@ -1,19 +1,24 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { CollectionInfo, Photo, User } from "../../typings";
 import PostModal from "../components/PostModal";
 
 function Search() {
   const { query } = useParams();
   const [searchQuery, setSearchQuery] = useState(query);
-  const [searchResults, setSearchResults] = useState([]);
-  const [searchType, setSearchType] = useState("photos");
+  const [searchResults, setSearchResults] = useState<
+    User[] | Photo[] | CollectionInfo[]
+  >([]);
+  const [searchType, setSearchType] = useState<
+    "photos" | "collections" | "users"
+  >("photos");
   const [page, setPage] = useState(1);
   const [lastPage, setLastPage] = useState(false);
   const [loading, setLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
   const [modalIndex, setModalIndex] = useState(0);
-  const [favorites, setFavorites] = useState([]);
+  const [favorites, setFavorites] = useState<Photo[]>([]);
   const navigate = useNavigate();
   const ACCESS_KEY = import.meta.env.VITE_ACCESS_KEY;
 
@@ -57,7 +62,7 @@ function Search() {
     localStorage.setItem("favorites", JSON.stringify(favorites));
   }, [favorites]);
 
-  const changeSearch = (type) => {
+  const changeSearch = (type: "photos" | "collections" | "users") => {
     if (type === searchType) {
       return;
     }
@@ -81,19 +86,22 @@ function Search() {
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
 
-    return (_) => {
+    return () => {
       window.removeEventListener("scroll", handleScroll);
     };
   });
 
-  const renderImg = (result) => {
+  const renderImg = (result: User | Photo | CollectionInfo) => {
     let src = "";
     if (searchType === "photos") {
-      src = result.urls.small;
+      // If result is of type Photo
+      src = (result as Photo).urls.small;
     } else if (searchType === "collections") {
-      src = result.cover_photo.urls.small;
+      // If result if of type CollectionInfo
+      src = (result as CollectionInfo).cover_photo.urls.small;
     } else {
-      src = result.profile_image.large;
+      // If result if of type User
+      src = (result as User).profile_image.large;
     }
     return (
       <>
@@ -110,19 +118,13 @@ function Search() {
             // Overlay + Text
             <div className="absolute bottom-2 w-full  text-center text-lg font-bold text-white">
               <span className="[text-shadow:_0_0_3px_rgb(0_0_0_)]">
-                {result.name}
+                {(result as User).name}
               </span>
             </div>
           ) : (
             // Overlay Shadow + Text
             <div className="absolute top-1/2 w-full -translate-y-1/2  text-center text-lg font-bold text-white">
-              {searchType === "users" ? (
-                <span className="[text-shadow:_0_0_3px_rgb(0_0_0_)]">
-                  {result.name}
-                </span>
-              ) : (
-                `${result.total_photos.toLocaleString()} photos`
-              )}
+              {`${(result as CollectionInfo).total_photos} photos`}
             </div>
           ))}
       </>
@@ -173,10 +175,10 @@ function Search() {
                 <div
                   className="group relative h-full w-full cursor-pointer overflow-hidden rounded-lg"
                   onClick={() => {
-                    if (searchType === "photos") {
+                    if ("likes" in result) {
                       setModalIndex(index);
                       setShowModal(true);
-                    } else if (searchType === "users") {
+                    } else if ("profile_image" in result) {
                       navigate(
                         `/${searchType.slice(0, -1)}/${result.username}`
                       );
@@ -202,7 +204,7 @@ function Search() {
       {/* Modal */}
       {searchType === "photos" && showModal && (
         <PostModal
-          data={searchResults}
+          data={searchResults as Photo[]}
           index={modalIndex}
           showModal={setShowModal}
           favorites={favorites}

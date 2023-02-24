@@ -30,7 +30,6 @@ function User() {
       const response2 = await axios.get(
         `https://api.unsplash.com/users/${userID}/collections?client_id=${ACCESS_KEY}&per_page=6`
       );
-      console.log(response2.data);
       setUserCollections(response2.data);
     } catch {
       alert("Something went wrong with the API, please try again later");
@@ -119,19 +118,19 @@ function User() {
           <div className="mt-4 flex w-full justify-center text-center">
             <div className="w-1/4">
               <p className="font-bold ">
-                {userInfo?.downloads.toLocaleString()}
+                {userInfo?.downloads}
               </p>
               <p>Downloads</p>
             </div>
             <div className="w-1/4">
               <p className="font-bold ">
-                {userInfo?.followers_count.toLocaleString()}
+                {userInfo?.followers_count}
               </p>
               <p>Followers</p>
             </div>
             <div className="w-1/4">
               <p className="font-bold ">
-                {userInfo?.following_count.toLocaleString()}
+                {userInfo?.following_count}
               </p>
               <p>Following</p>
             </div>
