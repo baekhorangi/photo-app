@@ -1,15 +1,13 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import {
   setModalPhotoIndex,
   setModalPhotos,
   setShowModal,
 } from "../../redux/modalSlice";
-import { RootState } from "../../redux/store";
 import { CollectionInfo, Photo } from "../../typings";
-import PostModal from "../components/PostModal";
 import Tags from "../components/ui/Tags";
 
 function Collection() {
@@ -21,24 +19,10 @@ function Collection() {
   const [page, setPage] = useState(1);
   const [lastPage, setLastPage] = useState(false);
   const [loading, setLoading] = useState(true);
-  const [favorites, setFavorites] = useState<Photo[]>([]);
   const ACCESS_KEY = import.meta.env.VITE_ACCESS_KEY;
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    const localFavorites = localStorage.getItem("favorites");
-    if (localFavorites) {
-      setFavorites(JSON.parse(localFavorites));
-    }
-
-    fetchCollectionInfo();
-  }, []);
-
-  useEffect(() => {
-    localStorage.setItem("favorites", JSON.stringify(favorites));
-  }, [favorites]);
 
   const fetchCollectionPhotos = async () => {
     console.log("loading");

@@ -7,36 +7,15 @@ import {
 } from "../../redux/modalSlice";
 import { RootState } from "../../redux/store";
 import { Photo } from "../../typings";
-import PostModal from "../components/PostModal";
 
 function Favorite() {
-  const [favorites, setFavorites] = useState<Photo[]>([]);
-  const [photos, setPhotos] = useState<Photo[]>();
-  const [firstLoad, setFirstLoad] = useState(true);
-  const showModal = useSelector((state: RootState) => state.modal.open);
+  const favorites = useSelector((state: RootState) => state.favorites.photos);
+  const [photos, setPhotos] = useState<Photo[]>(favorites);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const localFavorites = localStorage.getItem("favorites");
-    if (localFavorites) {
-      setFavorites(JSON.parse(localFavorites));
-      setPhotos(JSON.parse(localFavorites));
-      setFirstLoad(false);
-    }
-  }, []);
-
-  useEffect(() => {
-    localStorage.setItem("favorites", JSON.stringify(favorites));
+    setPhotos(favorites);
   }, [favorites]);
-
-  useEffect(() => {
-    console.log('aaaa')
-    console.log(favorites)
-    if (!showModal && firstLoad !== true) {
-      console.log('a2')
-      setPhotos(favorites);
-    }
-  }, [showModal]);
 
   return (
     <>

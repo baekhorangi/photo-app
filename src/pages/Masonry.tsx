@@ -4,7 +4,6 @@ import dummyData from "../../reponse";
 import PostModal from "../components/PostModal";
 import { Photo } from "../../typings";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../redux/store";
 import {
   setModalPhotoIndex,
   setModalPhotos,

@@ -13,7 +13,7 @@ const initialState: modalState = {
   photoIndex: 0,
 };
 
-export const modalSlice = createSlice({
+const modalSlice = createSlice({
   name: "modal",
   initialState,
   reducers: {
@@ -29,6 +29,7 @@ export const modalSlice = createSlice({
   },
 });
 
-export const { setShowModal, setModalPhotos, setModalPhotoIndex } = modalSlice.actions;
+export const { setShowModal, setModalPhotos, setModalPhotoIndex } =
+  modalSlice.actions;
 
 export default modalSlice.reducer;

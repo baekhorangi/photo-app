@@ -1,18 +1,22 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import Heart2Icon from "../assets/heart-2.svg";
 import StarIcon from "../assets/star.svg";
 import EyeIcon from "../assets/eye.svg";
 import Tags from "../components/ui/Tags";
 import { Photo as PhotoType } from "../../typings";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
+import { setFavorites } from "../../redux/favoriteSlice";
 
 function Photo() {
   const { photoID } = useParams();
   const [photo, setPhoto] = useState<PhotoType>();
   const ACCESS_KEY = import.meta.env.VITE_ACCESS_KEY;
   const navigate = useNavigate();
-  const [favorites, setFavorites] = useState<PhotoType[]>([]);
+  const favorites = useSelector((state: RootState) => state.favorites.photos);
+  const dispatch = useDispatch();
 
   const fetchPhoto = async () => {
     console.log("loading info");
@@ -27,16 +31,8 @@ function Photo() {
   };
 
   useEffect(() => {
-    const localFavorites = localStorage.getItem("favorites");
-    if (localFavorites) {
-      setFavorites(JSON.parse(localFavorites));
-    }
     fetchPhoto();
   }, []);
-
-  useEffect(() => {
-    localStorage.setItem("favorites", JSON.stringify(favorites));
-  }, [favorites]);
 
   return (
     <section className="mx-auto mt-4 flex min-h-full max-w-4xl flex-col dark:text-white">
@@ -88,21 +84,7 @@ function Photo() {
           {/* Favorite */}
           <div
             className="flex w-1/6 items-center justify-center"
-            onClick={() => {
-              setFavorites((prevFavs): PhotoType[] => {
-                if (
-                  prevFavs.filter((elem) => elem.id === photo?.id).length !== 0
-                ) {
-                  console.log("remove");
-                  return prevFavs.filter((elem) => elem.id !== photo?.id);
-                } else if (prevFavs && photo) {
-                  console.log("add");
-                  return [...prevFavs, photo];
-                } else {
-                  return [];
-                }
-              });
-            }}>
+            onClick={() => dispatch(setFavorites(photo!))}>
             <button>
               <img
                 className={`${

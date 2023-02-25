@@ -1,9 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit";
+import favoriteSlice from "./favoriteSlice";
 import modalSlice from "./modalSlice";
+
 
 export const store = configureStore({
   reducer: {
-    modal: modalSlice
+    modal: modalSlice,
+    favorites: favoriteSlice
   },
 });
 

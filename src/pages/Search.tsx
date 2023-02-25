@@ -1,15 +1,13 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import {
   setModalPhotoIndex,
   setModalPhotos,
   setShowModal,
 } from "../../redux/modalSlice";
-import { RootState } from "../../redux/store";
 import { CollectionInfo, Photo, User } from "../../typings";
-import PostModal from "../components/PostModal";
 
 function Search() {
   const { query } = useParams();
@@ -23,7 +21,6 @@ function Search() {
   const [page, setPage] = useState(1);
   const [lastPage, setLastPage] = useState(false);
   const [loading, setLoading] = useState(true);
-  const [favorites, setFavorites] = useState<Photo[]>([]);
   const navigate = useNavigate();
   const ACCESS_KEY = import.meta.env.VITE_ACCESS_KEY;
 
@@ -57,17 +54,6 @@ function Search() {
     setSearchQuery(query);
     setLastPage(false);
   }, [query]);
-
-  useEffect(() => {
-    const localFavorites = localStorage.getItem("favorites");
-    if (localFavorites) {
-      setFavorites(JSON.parse(localFavorites));
-    }
-  }, []);
-
-  useEffect(() => {
-    localStorage.setItem("favorites", JSON.stringify(favorites));
-  }, [favorites]);
 
   const changeSearch = (type: "photos" | "collections" | "users") => {
     if (type === searchType) {

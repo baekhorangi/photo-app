@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import XIcon from "../assets/xmark.svg";
 import LeftChevronIcon from "../assets/left-chevron.svg";
 import RightChevronIcon from "../assets/right-chevron.svg";
@@ -8,12 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setModalPhotoIndex, setShowModal } from "../../redux/modalSlice";
 import { RootState } from "../../redux/store";
 
-interface Props {
-  favorites: Photo[];
-  setFavorites: Dispatch<SetStateAction<Photo[]>>;
-}
-
-function PostModal({ favorites, setFavorites }: Props) {
+function PostModal() {
   const photos = useSelector((state: RootState) => state.modal.photos);
   const photoIndex = useSelector((state: RootState) => state.modal.photoIndex);
   const dispatch = useDispatch();
@@ -55,11 +50,7 @@ function PostModal({ favorites, setFavorites }: Props) {
           </button>
 
           {/* Post */}
-          <PostModalItem
-            photo={photos[photoIndex]}
-            favorites={favorites}
-            setFavorites={setFavorites}
-          />
+          <PostModalItem photo={photos[photoIndex]} />
         </div>
       </div>
 

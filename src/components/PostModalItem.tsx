@@ -1,20 +1,22 @@
-import React, { Dispatch, SetStateAction } from "react";
-import { useDispatch } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { Dispatch, SetStateAction } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { setFavorites } from "../../redux/favoriteSlice";
 import { setShowModal } from "../../redux/modalSlice";
+import { RootState } from "../../redux/store";
 import { Photo } from "../../typings";
 import Heart2Icon from "../assets/heart-2.svg";
 import StarIcon from "../assets/star.svg";
 
 interface Props {
   photo: Photo;
-  favorites: Photo[];
-  setFavorites: Dispatch<SetStateAction<Photo[]>>;
 }
 
-function PostModalItem({ photo, favorites, setFavorites }: Props) {
+function PostModalItem({ photo }: Props) {
   const navigate = useNavigate();
+  const favorites = useSelector((state: RootState) => state.favorites.photos);
   const dispatch = useDispatch();
+
   return (
     <div className="flex h-full flex-col justify-between">
       {/* User info */}
@@ -72,16 +74,17 @@ function PostModalItem({ photo, favorites, setFavorites }: Props) {
         <div
           className="flex w-1/3 items-center justify-end"
           onClick={() => {
-            setFavorites((prevFavs) => {
-              if (
-                prevFavs.filter((elem) => elem.id === photo.id).length !== 0
-              ) {
-                console.log("remove");
-                return prevFavs.filter((elem) => elem.id !== photo.id);
-              }
-              console.log("add");
-              return [...prevFavs, photo];
-            });
+            // setFavorites((prevFavs) => {
+            //   if (
+            //     prevFavs.filter((elem) => elem.id === photo.id).length !== 0
+            //   ) {
+            //     console.log("remove");
+            //     return prevFavs.filter((elem) => elem.id !== photo.id);
+            //   }
+            //   console.log("add");
+            //   return [...prevFavs, photo];
+            // });
+            dispatch(setFavorites(photo));
           }}>
           <button>
             <img

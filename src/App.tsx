@@ -7,19 +7,24 @@ import User from "./pages/User";
 import PhotoType from "./pages/Photo";
 import Collection from "./pages/Collection";
 import PostModal from "./components/PostModal";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 import { useEffect, useState } from "react";
 import { Photo } from "../typings";
+import { setFavorites } from "../redux/favoriteSlice";
 
 function App() {
   const showModal = useSelector((state: RootState) => state.modal.open);
+  const favorites = useSelector((state: RootState) => state.favorites.photos);
+  const dispatch = useDispatch();
 
-  const [favorites, setFavorites] = useState<Photo[]>([]);
   useEffect(() => {
     const localFavorites = localStorage.getItem("favorites");
     if (localFavorites) {
-      setFavorites(JSON.parse(localFavorites));
+      console.log("loading favorites");
+      const parsedLocalFavorites: Photo[] = JSON.parse(localFavorites);
+      for (let i = 0; i < parsedLocalFavorites.length; i++)
+        dispatch(setFavorites(parsedLocalFavorites[i]));
     }
   }, []);
 
@@ -43,9 +48,7 @@ function App() {
           <Route path="/photo/:photoID" element={<PhotoType />} />
           <Route path="/collection/:collectionID" element={<Collection />} />
         </Routes>
-        {showModal && (
-          <PostModal favorites={favorites} setFavorites={setFavorites} />
-        )}
+        {showModal && <PostModal />}
       </div>
     </Router>
   );
