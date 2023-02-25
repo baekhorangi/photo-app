@@ -25,7 +25,6 @@ function User() {
   const ACCESS_KEY = import.meta.env.VITE_ACCESS_KEY;
 
   const fetchUserInfo = async () => {
-    console.log("loading info + collections");
     try {
       const response = await axios.get(
         `https://api.unsplash.com/users/${userID}?client_id=${ACCESS_KEY}`
@@ -41,7 +40,6 @@ function User() {
   };
 
   const fetchUserPhotos = async () => {
-    console.log("loading photos");
     try {
       const response = await axios.get(
         `https://api.unsplash.com/users/${userID}/photos?client_id=${ACCESS_KEY}&page=${page}&per_page=30`

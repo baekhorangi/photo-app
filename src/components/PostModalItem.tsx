@@ -1,4 +1,3 @@
-import { Dispatch, SetStateAction } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { setFavorites } from "../../redux/favoriteSlice";
@@ -74,16 +73,6 @@ function PostModalItem({ photo }: Props) {
         <div
           className="flex w-1/3 items-center justify-end"
           onClick={() => {
-            // setFavorites((prevFavs) => {
-            //   if (
-            //     prevFavs.filter((elem) => elem.id === photo.id).length !== 0
-            //   ) {
-            //     console.log("remove");
-            //     return prevFavs.filter((elem) => elem.id !== photo.id);
-            //   }
-            //   console.log("add");
-            //   return [...prevFavs, photo];
-            // });
             dispatch(setFavorites(photo));
           }}>
           <button>

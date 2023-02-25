@@ -1,9 +1,7 @@
-import { Dispatch, SetStateAction, useState } from "react";
 import XIcon from "../assets/xmark.svg";
 import LeftChevronIcon from "../assets/left-chevron.svg";
 import RightChevronIcon from "../assets/right-chevron.svg";
 import PostModalItem from "./PostModalItem";
-import { Photo } from "../../typings";
 import { useDispatch, useSelector } from "react-redux";
 import { setModalPhotoIndex, setShowModal } from "../../redux/modalSlice";
 import { RootState } from "../../redux/store";

@@ -19,7 +19,6 @@ function Photo() {
   const dispatch = useDispatch();
 
   const fetchPhoto = async () => {
-    console.log("loading info");
     try {
       const response = await axios.get(
         `https://api.unsplash.com/photos/${photoID}?client_id=${ACCESS_KEY}`

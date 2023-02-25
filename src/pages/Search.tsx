@@ -27,7 +27,6 @@ function Search() {
   const dispatch = useDispatch();
 
   const fetchSearch = async () => {
-    console.log("loading");
     try {
       const response = await axios.get(
         `https://api.unsplash.com/search/${searchType}?client_id=${ACCESS_KEY}&page=${page}&per_page=30&query=${searchQuery}`
@@ -87,13 +86,10 @@ function Search() {
   const renderImg = (result: User | Photo | CollectionInfo) => {
     let src = "";
     if (searchType === "photos") {
-      // If result is of type Photo
       src = (result as Photo).urls.small;
     } else if (searchType === "collections") {
-      // If result if of type CollectionInfo
       src = (result as CollectionInfo).cover_photo.urls.small;
     } else {
-      // If result if of type User
       src = (result as User).profile_image.large;
     }
     return (

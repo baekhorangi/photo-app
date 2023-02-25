@@ -25,19 +25,16 @@ function Collection() {
   const dispatch = useDispatch();
 
   const fetchCollectionPhotos = async () => {
-    console.log("loading");
     try {
       const response = await axios.get(
         `https://api.unsplash.com/collections/${collectionID}/photos?client_id=${ACCESS_KEY}&page=${page}&per_page=30`
       );
-      // console.log(response);
       setCollectionPhotos((prevResults): Photo[] => {
         return [...prevResults, ...response.data];
       });
       if (response.headers["x-total"] <= page * 30) {
         setLastPage(true);
       }
-      // setPage(page + 1);
       setLoading(false);
     } catch {
       alert("Something went wrong with the API, please try again later");
@@ -45,7 +42,6 @@ function Collection() {
   };
 
   const fetchCollectionInfo = async () => {
-    console.log("loading info");
     try {
       const response = await axios.get(
         `https://api.unsplash.com/collections/${collectionID}?client_id=${ACCESS_KEY}`
@@ -55,6 +51,10 @@ function Collection() {
       alert("Something went wrong with the API, please try again later");
     }
   };
+
+  useEffect(() => {
+    fetchCollectionInfo();
+  }, []);
 
   useEffect(() => {
     fetchCollectionPhotos();

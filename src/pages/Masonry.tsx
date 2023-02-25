@@ -1,9 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import axios from "axios";
-import dummyData from "../../reponse";
-import PostModal from "../components/PostModal";
 import { Photo } from "../../typings";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import {
   setModalPhotoIndex,
   setModalPhotos,
@@ -11,7 +9,6 @@ import {
 } from "../../redux/modalSlice";
 
 function Masonry() {
-  const useDummyData = false;
   const [photos, setPhotos] = useState<Photo[]>([]);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(true);
@@ -25,23 +22,15 @@ function Masonry() {
   );
 
   const fetchPhotos = async () => {
-    console.log("loading");
     try {
-      if (useDummyData) {
-        // setPhotos((prevPhotos): Photo[] => {
-        //   return [...prevPhotos, ...dummyData];
-        // });
-      } else {
-        const response = await axios.get(
-          `https://api.unsplash.com/photos?client_id=${ACCESS_KEY}&page=${page}&per_page=30`
-        );
-        setPhotos((prevPhotos) => {
-          return [...prevPhotos, ...response.data];
-        });
-      }
+      const response = await axios.get(
+        `https://api.unsplash.com/photos?client_id=${ACCESS_KEY}&page=${page}&per_page=30`
+      );
+      setPhotos((prevPhotos) => {
+        return [...prevPhotos, ...response.data];
+      });
       setLoading(false);
     } catch (error) {
-      console.log(error);
       alert("Something went wrong with the API, please try again later");
     }
   };
@@ -99,7 +88,6 @@ function Masonry() {
                   key={photoIndex}
                   className="mb-4 cursor-pointer overflow-hidden rounded-lg"
                   onClick={() => {
-                    // console.log(photoIndex * masonryCols + index);
                     dispatch(
                       setModalPhotoIndex(photoIndex * masonryCols + index)
                     );
